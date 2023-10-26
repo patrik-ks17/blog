@@ -6,6 +6,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+<style>
+	html {
+		scroll-behavior: smooth;
+	}
+</style>
+
 <body style="font-family: Open Sans, sans-serif">
 	<section class="px-6 py-8">
 		<nav class="md:flex md:items-center md:justify-between">
@@ -15,20 +21,29 @@
 				</a>
 			</div>
 
-			<div class="mt-8 md:mt-0 flex items-center">
+			<div class="mt-8 flex items-center md:mt-0">
 				@guest
 					<a href="/register" class="text-xs font-bold uppercase">Register</a>
 					<a href="/login" class="ml-3 text-xs font-bold uppercase">Log In</a>
 				@else
-					<span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}!</span>
+					<x-dropdown>
+						<x-slot name="trigger">
+							<button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}!</button>
+						</x-slot>
 
-                    <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
-                        @csrf
-                        <button type="submit">Log Out</button>
-                    </form>
+                        <x-dropdown-item href="/admin/dashboard">Dashboard</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
+
+                        <form id="logout-form" method="POST" action="/logout" class="hidden">
+                            @csrf
+                        </form>
+					</x-dropdown>
+
+
 				@endguest
 
-				<a href="#" class="ml-3 rounded-full bg-blue-500 px-5 py-3 text-xs font-semibold uppercase text-white">
+				<a href="#newsletter" class="ml-3 rounded-full bg-blue-500 px-5 py-3 text-xs font-semibold uppercase text-white">
 					Subscribe for Updates
 				</a>
 			</div>
@@ -36,7 +51,8 @@
 
 		{{ $slot }}
 
-		<footer class="mt-16 rounded-xl border border-black border-opacity-5 bg-gray-100 px-10 py-16 text-center">
+		<footer id="newsletter"
+			class="mt-16 rounded-xl border border-black border-opacity-5 bg-gray-100 px-10 py-16 text-center">
 			<img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
 			<h5 class="text-3xl">Stay in touch with the latest posts</h5>
 			<p class="mt-3 text-sm">Promise to keep the inbox clean. No bugs.</p>

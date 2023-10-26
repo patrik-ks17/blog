@@ -3,69 +3,36 @@
 		<main class="mx-auto mt-10 max-w-lg rounded-xl border border-gray-400 bg-gray-200 p-6">
 			<h1 class="text-center text-xl font-bold">Register!</h1>
 
-			<form method="POST" action="/register" class="mt-10">
+			<form
+				class="mt-10"
+				method="POST"
+				action="/register"
+			>
 				@csrf
 
-				<div class="mb-6">
-					<label class="mb-2 block text-xs font-bold uppercase text-gray-700" for="name">
-						Name
-					</label>
+				<x-form.input name="name" />
 
-					<input class="w-full border border-gray-400 p-2" type="text" name="name" id="name"
-						value="{{ old('name') }}" required>
-					@error('name')
-						<p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-					@enderror
-				</div>
+				<x-form.input name="username" />
 
-				<div class="mb-6">
-					<label class="mb-2 block text-xs font-bold uppercase text-gray-700" for="username">
-						Username
-					</label>
+				<x-form.input
+					name="email"
+					type="email"
+				/>
 
-					<input class="w-full border border-gray-400 p-2" type="text" name="username" id="username"
-						value="{{ old('username') }}" required>
-					@error('username')
-						<p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-					@enderror
-				</div>
+				<x-form.input
+					name="password"
+					type="password"
+				/>
 
-				<div class="mb-6">
-					<label class="mb-2 block text-xs font-bold uppercase text-gray-700" for="email">
-						Email
-					</label>
+				<x-form.button>Submit</x-form.button>
 
-					<input class="w-full border border-gray-400 p-2" type="email" name="email" id="email"
-						value="{{ old('email') }}" required>
-					@error('email')
-						<p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-					@enderror
-				</div>
-
-				<div class="mb-6">
-					<label class="mb-2 block text-xs font-bold uppercase text-gray-700" for="password">
-						Password
-					</label>
-
-					<input class="w-full border border-gray-400 p-2" type="password" name="password" id="password" required>
-					@error('password')
-						<p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-					@enderror
-				</div>
-
-				<div class="mb-6">
-					<button type="submit" class="rounded bg-blue-400 px-4 py-2 text-white hover:bg-blue-500">
-						Submit
-					</button>
-				</div>
-
-                @if ($errors->any())
+				{{-- @if ($errors->any())
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li class="text-red-600 text-xs">{{ $error }}</li>
                         @endforeach
                     </ul>
-                @endif
+                @endif --}}
 			</form>
 		</main>
 

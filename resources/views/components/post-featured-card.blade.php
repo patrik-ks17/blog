@@ -1,10 +1,10 @@
 @props(['post'])
 
-<article class="rounded-xl border border-black border-opacity-0 transition-colors duration-300 hover:border-opacity-5 hover:bg-gray-100">
+<article
+	class="rounded-xl border border-black border-opacity-0 transition-colors duration-300 hover:border-opacity-5 hover:bg-gray-100">
 	<div class="px-5 py-6 lg:flex">
 		<div class="flex-1 lg:mr-8">
-            {{-- TODO Image --}}
-			<img src="./images/illustration-1.png" alt="Blog Post illustration" class="rounded-xl">
+			<img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl">
 		</div>
 
 		<div class="flex flex-1 flex-col justify-between">
@@ -17,9 +17,11 @@
 				</div>
 
 				<div class="mt-4">
-					<h1 class="text-3xl">
-						{{ $post->title }}
-					</h1>
+					<a href="/posts/{{ $post->slug }}">
+						<h1 class="text-3xl">
+							{{ $post->title }}
+						</h1>
+					</a>
 
 					<span class="mt-2 block text-xs text-gray-400">
 						Published <time>{{ $post->created_at->diffForHumans() }}</time>
